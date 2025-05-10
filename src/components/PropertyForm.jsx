@@ -38,7 +38,8 @@ const PropertyForm = () => {
     phoneNumber: ''
   });
   
-
+  // State for uploaded images
+  const [uploadedImages, setUploadedImages] = useState([]);
 
   const [touched, setTouched] = useState({
     propertyType: false,
@@ -55,8 +56,6 @@ const PropertyForm = () => {
     facing: false,
     projectName: false,
     adTitle: false,
-    propertyType: false,
-    bhk: false,
     bathrooms: false,
     furnishing: false,
     projectStatus: false,
@@ -100,7 +99,7 @@ const PropertyForm = () => {
     }));
 
     // Check if field is empty and touched
-    if (!value && touched[name]) {
+    if (!value) {
       setErrors(prev => ({
         ...prev,
         [name]: true
@@ -137,111 +136,48 @@ const PropertyForm = () => {
     const file = e.target.files[0];
     if (!file) return;
     
+    // Create a URL for the image preview
+    const imageUrl = URL.createObjectURL(file);
+    
+    // Update the uploadedImages state
+    const newImages = [...uploadedImages];
+    newImages[index] = { file, url: imageUrl };
+    setUploadedImages(newImages);
+    
     console.log(`Uploaded image at index ${index}:`, file.name);
-    // Here you would typically handle the file upload
-    // For example, create a preview and store the file in state
+  };
+  
+  // Handle image removal
+  const handleRemoveImage = (index) => {
+    const newImages = [...uploadedImages];
+    if (newImages[index] && newImages[index].url) {
+      URL.revokeObjectURL(newImages[index].url); // Clean up the URL object
+    }
+    newImages.splice(index, 1);
+    setUploadedImages(newImages);
   };
 
   return (
     <div className="max-w-4xl mx-auto bg-white shadow-md rounded-md overflow-hidden">
-      {/* No back button as requested */}
-      
       <form onSubmit={handleSubmit}>
-        {/* Post Your Ad Header */}
+        {/* Header Section */}
+        <HeaderSection />
+        
+        {/* Category Section */}
+        <CategorySection />
+
+        {/* Property Type Section */}
+        <PropertyTypeSection formData={formData} handleRadioChange={handleRadioChange} />
+
+        {/* BHK Section */}
+        <BHKSection formData={formData} handleRadioChange={handleRadioChange} />
+
+        {/* Bathroom Section */}
+        <BathroomSection formData={formData} handleRadioChange={handleRadioChange} />
+        
         <div className="px-6 py-4 border-b border-gray-200">
-          <h1 className="text-2xl font-bold text-center">POST YOUR AD</h1>
-        </div>
-
-        {/* Selected Category */}
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h2 className="font-bold mb-2 text-left">SELECTED CATEGORY</h2>
-          <div className="text-sm text-gray-600 flex items-center">
-            <span>Properties / For Sale / Houses & Apartments</span>
-            <button className="ml-2 text-blue-500 transition-all duration-200 hover:text-blue-700 hover:underline">Change</button>
-          </div>
-        </div>
-
-        {/* Include Some Details */}
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h2 className="font-bold mb-4 text-left">INCLUDE SOME DETAILS</h2>
-          
-
-          
-          {/* Property Type */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium mb-2 text-left">
-              <span className="text-red-500 font-medium">Type *</span>
-            </label>
-            <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
-              <button 
-                type="button"
-                className={`py-2 px-4 border rounded-md text-sm transition-all duration-200 ${formData.propertyType === 'flats' ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-blue-300 hover:bg-blue-50/50'}`}
-                onClick={() => handleRadioChange('propertyType', 'flats')}
-              >
-                Flats / Apartments
-              </button>
-              <button 
-                type="button"
-                className={`py-2 px-4 border rounded-md text-sm transition-all duration-200 ${formData.propertyType === 'independent' ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-blue-300 hover:bg-blue-50/50'}`}
-                onClick={() => handleRadioChange('propertyType', 'independent')}
-              >
-                Independent / Builder Floors
-              </button>
-              <button 
-                type="button"
-                className={`py-2 px-4 border rounded-md text-sm transition-all duration-200 ${formData.propertyType === 'farmHouse' ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-blue-300 hover:bg-blue-50/50'}`}
-                onClick={() => handleRadioChange('propertyType', 'farmHouse')}
-              >
-                Farm House
-              </button>
-              <button 
-                type="button"
-                className={`py-2 px-4 border rounded-md text-sm transition-all duration-200 ${formData.propertyType === 'houseVilla' ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-blue-300 hover:bg-blue-50/50'}`}
-                onClick={() => handleRadioChange('propertyType', 'houseVilla')}
-              >
-                House & Villa
-              </button>
-            </div>
-            {!formData.propertyType && (
-              <p className="text-red-500 text-xs mt-1">Property type is mandatory. Please select an option.</p>
-            )}
-          </div>
-
-          {/* BHK */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium mb-2 text-left">BHK</label>
-            <div className="flex flex-wrap gap-2">
-              {[1, 2, 3, 4, '4+'].map((value) => (
-                <button 
-                  key={value}
-                  type="button"
-                  className={`py-2 px-4 border rounded-md text-sm transition-all duration-200 ${formData.bhk === value.toString() ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-blue-300 hover:bg-blue-50/50'}`}
-                  onClick={() => handleRadioChange('bhk', value.toString())}
-                >
-                  {value}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Bathrooms */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium mb-2 text-left">Bathrooms</label>
-            <div className="flex flex-wrap gap-2">
-              {[1, 2, 3, 4, '4+'].map((value) => (
-                <button 
-                  key={value}
-                  type="button"
-                  className={`py-2 px-4 border rounded-md text-sm transition-all duration-200 ${formData.bathrooms === value.toString() ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-blue-300 hover:bg-blue-50/50'}`}
-                  onClick={() => handleRadioChange('bathrooms', value.toString())}
-                >
-                  {value}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Furnishing */}
+          <h2 className="font-bold mb-4 text-left">ADDITIONAL DETAILS</h2>
+          {/* Add additional sections */}
           <div className="mb-4">
             <label className="block text-sm font-medium mb-2 text-left">Furnishing</label>
             <div className="flex flex-wrap gap-2">
@@ -302,8 +238,8 @@ const PropertyForm = () => {
               name="superBuiltupArea"
               value={formData.superBuiltupArea}
               onChange={handleInputChange}
-              onBlur={() => setFormData({ ...formData, superBuiltupAreaTouched: true })}
-              className={`w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${formData.superBuiltupAreaTouched && !formData.superBuiltupArea && 'border-red-500 bg-red-50'}`}
+              onBlur={handleBlur}
+              className={`w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${touched.superBuiltupArea && !formData.superBuiltupArea ? 'border-red-500 bg-red-50' : 'border-gray-300'}`}
               placeholder="Enter super builtup area"
               required
             />
@@ -314,7 +250,7 @@ const PropertyForm = () => {
 
           {/* Carpet Area */}
           <div className="mb-4">
-            <label htmlFor="carpetArea" className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium mb-2 text-left">
               Carpet Area sqft <span className="text-red-500">*</span>
             </label>
             <input
@@ -323,15 +259,13 @@ const PropertyForm = () => {
               name="carpetArea"
               value={formData.carpetArea}
               onChange={handleInputChange}
-              onBlur={() => setFormData({ ...formData, carpetAreaTouched: true })}
-              className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 ${
-                formData.carpetAreaTouched && !formData.carpetArea && 'border-red-300 bg-red-50'
-              }`}
+              onBlur={handleBlur}
+              className={`mt-1 block w-full rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 ${touched.carpetArea && !formData.carpetArea ? 'border-red-300 bg-red-50' : 'border-gray-300'}`}
               placeholder="Enter carpet area in sq ft"
               min="0"
               required
             />
-            {formData.carpetAreaTouched && !formData.carpetArea && (
+            {touched.carpetArea && !formData.carpetArea && (
               <p className="mt-1 text-sm text-red-600">Please enter carpet area in square feet</p>
             )}
           </div>
@@ -410,6 +344,7 @@ const PropertyForm = () => {
               <option value="southwest">South West</option>
             </select>
           </div>
+          
           <div className="mb-4">
             <label className="block text-sm font-medium mb-2 text-left">
               Project Name
@@ -427,28 +362,31 @@ const PropertyForm = () => {
         </div>
 
         {/* Ad title */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-2 text-left">
-            <span className="text-red-500 font-medium">Ad title *</span>
-          </label>
-          <input
-            type="text"
-            name="adTitle"
-            value={formData.adTitle}
-            onChange={handleInputChange}
-            onBlur={() => setFormData({ ...formData, adTitleTouched: true })}
-            className={`w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${formData.adTitleTouched && !formData.adTitle && 'border-red-500 bg-red-50'}`}
-            placeholder="Enter ad title"
-            required
-          />
-          <div className="text-xs text-gray-500 mt-1">Mention the key features of your item (e.g. brand, model, age, type)</div>
-          <div className="text-xs text-right text-gray-500">0 / 70</div>
-          {formData.adTitleTouched && !formData.adTitle && (
-            <p className="text-red-500 text-xs mt-1">Ad title is mandatory. Please complete the required field.</p>
-          )}
+        <div className="px-6 py-4 border-b border-gray-200">
+          <h2 className="font-bold mb-4 text-left">TITLE & DESCRIPTION</h2>
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2 text-left">
+              <span className="text-red-500 font-medium">Ad title *</span>
+            </label>
+            <input
+              type="text"
+              name="adTitle"
+              value={formData.adTitle}
+              onChange={handleInputChange}
+              onBlur={handleBlur}
+              className={`w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${touched.adTitle && !formData.adTitle ? 'border-red-500 bg-red-50' : 'border-gray-300'}`}
+              placeholder="Enter ad title"
+              required
+            />
+            <div className="text-xs text-gray-500 mt-1">Mention the key features of your item (e.g. brand, model, age, type)</div>
+            <div className="text-xs text-right text-gray-500">0 / 70</div>
+            {touched.adTitle && !formData.adTitle && (
+              <p className="text-red-500 text-xs mt-1">Ad title is mandatory. Please complete the required field.</p>
+            )}
+          </div>
+          
+          {/* Description section is now outside this div */}
         </div>
-
-        {/* Description */}
         <DescriptionSection 
           formData={formData} 
           setFormData={setFormData} 
@@ -473,92 +411,22 @@ const PropertyForm = () => {
         />
 
         {/* Confirm Your Location */}
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h2 className="font-bold mb-4 text-left">CONFIRM YOUR LOCATION</h2>
-          <div className="border-b border-gray-200 pb-4">
-            <div className="flex mb-4">
-              <button 
-                type="button"
-                className={`py-2 px-4 text-sm transition-all duration-200 ${formData.locationType === 'list' ? 'border-b-2 border-blue-500 font-medium' : 'hover:text-blue-500'}`}
-                onClick={() => handleRadioChange('locationType', 'list')}
-              >
-                LIST
-              </button>
-              <button 
-                type="button"
-                className={`py-2 px-4 text-sm transition-all duration-200 ${formData.locationType === 'current' ? 'border-b-2 border-blue-500 font-medium' : 'hover:text-blue-500'}`}
-                onClick={() => handleRadioChange('locationType', 'current')}
-              >
-                CURRENT LOCATION
-              </button>
-            </div>
-            <div className="mb-4">
-              <label className="block text-sm font-medium mb-2 text-left">
-                <span className="text-red-500 font-medium">State *</span>
-              </label>
-              <select
-                name="state"
-                value={formData.state}
-                onChange={handleInputChange}
-                onBlur={() => setFormData({ ...formData, stateTouched: true })}
-                className={`w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${formData.stateTouched && !formData.state && 'border-red-500 bg-red-50'}`}
-                required
-              >
-                <option value="">Select state</option>
-                <option value="delhi">Delhi</option>
-                <option value="maharashtra">Maharashtra</option>
-                <option value="karnataka">Karnataka</option>
-                <option value="tamilnadu">Tamil Nadu</option>
-                <option value="telangana">Telangana</option>
-              </select>
-              {!formData.state && (
-                <p className="text-red-500 text-xs mt-1">This field is mandatory</p>
-              )}
-            </div>
-          </div>
-        </div>
+        <LocationSection 
+          formData={formData} 
+          handleInputChange={handleInputChange} 
+          handleRadioChange={handleRadioChange} 
+          handleBlur={handleBlur}
+          touched={touched}
+        />
 
         {/* Review Your Details */}
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h2 className="font-bold mb-4 text-left">REVIEW YOUR DETAILS</h2>
-          <div className="flex items-center mb-4">
-            <div className="w-12 h-12 bg-teal-700 rounded-full flex items-center justify-center mr-4">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-            </div>
-            <div className="flex-1">
-              <label className="block text-sm mb-1 text-left">Name:</label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="OLX User"
-              />
-              <div className="text-xs text-right text-gray-500 mt-1">8 / 30</div>
-            </div>
-          </div>
-          <div className="flex items-center">
-            <div className="w-1/3">
-              <label className="block text-sm text-left">Your phone number</label>
-            </div>
-            <div className="w-2/3">
-              <span className="text-sm">+917015734771</span>
-            </div>
-          </div>
-        </div>
+        <UserDetailsSection 
+          formData={formData} 
+          handleInputChange={handleInputChange} 
+        />
 
         {/* Post Now Button */}
-        <div className="px-6 py-4">
-          <button
-            type="submit"
-            className="w-full bg-gray-200 text-gray-500 py-2 rounded-md font-medium transition-all duration-200 hover:bg-gray-300 hover:text-gray-700 active:bg-gray-400 active:scale-[0.98]"
-          >
-            Post now
-          </button>
-        </div>
+        <SubmitButtonSection />
       </form>
     </div>
   );

@@ -2,7 +2,7 @@ import React from 'react';
 
 const BHKSection = ({ formData, handleRadioChange }) => {
   return (
-    <div className="mb-4">
+    <div className="mb-4 px-6">
       <label className="block text-sm font-medium mb-2 text-left">
         <span className="text-red-500 font-medium">BHK *</span>
       </label>
