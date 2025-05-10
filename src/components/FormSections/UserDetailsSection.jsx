@@ -28,7 +28,7 @@ const UserDetailsSection = ({ formData, handleInputChange }) => {
           <label className="block text-sm text-left">Your phone number</label>
         </div>
         <div className="w-2/3">
-          <span className="text-sm">+917015734771</span>
+          <span className="text-sm">+91##########</span>
         </div>
       </div>
     </div>
