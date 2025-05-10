@@ -1,4 +1,15 @@
 import { useState } from 'react';
+import HeaderSection from './FormSections/HeaderSection';
+import CategorySection from './FormSections/CategorySection';
+import PropertyTypeSection from './FormSections/PropertyTypeSection';
+import BHKSection from './FormSections/BHKSection';
+import BathroomSection from './FormSections/BathroomSection';
+import DescriptionSection from './FormSections/DescriptionSection';
+import PriceSection from './FormSections/PriceSection';
+import PhotoUploadSection from './FormSections/PhotoUploadSection';
+import LocationSection from './FormSections/LocationSection';
+import UserDetailsSection from './FormSections/UserDetailsSection';
+import SubmitButtonSection from './FormSections/SubmitButtonSection';
 
 const PropertyForm = () => {
   // State for form data
