@@ -8,7 +8,7 @@ function App() {
   return (
     < div className='pb-20'>
       <Navbar/>
-    <div className="min-h-screen   sm:px-6">
+    <div className="min-h-screen  mt-[70px]  sm:px-6">
       {/* Render the property form component */}
       <PropertyForm />
     </div>
