@@ -10,9 +10,11 @@ const DescriptionSection = ({ formData, setFormData, handleInputChange }) => {
           value={formData.description}
           onChange={handleInputChange}
           onBlur={() => setFormData({ ...formData, descriptionTouched: true })}
-          className={`w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[100px] ${formData.descriptionTouched && !formData.description && 'border-red-500 bg-red-50'}`}
-          placeholder="Include condition, features and reason for selling"
+          className={`w-full md:w-[60%] p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[100px] ${formData.descriptionTouched && !formData.description && 'border-red-500 bg-red-50'}`}
+          
         ></textarea>
+                    <div className="text-xs text-gray-500 mt-1">Include condition, features and reason for selling</div>
+
         <div className="text-right text-sm text-gray-500">
           {formData.description ? formData.description.length : 0} / 4096
         </div>

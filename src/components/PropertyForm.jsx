@@ -157,11 +157,11 @@ const PropertyForm = () => {
     setUploadedImages(newImages);
   };
 
-  return (
-    <div className="max-w-4xl mx-auto bg-white shadow-md rounded-md overflow-hidden">
+  return (<>
+        <HeaderSection />
+    <div className="max-w-4xl mx-auto bg-white border-[1px] border-gray-400  overflow-hidden">
       <form onSubmit={handleSubmit}>
         {/* Header Section */}
-        <HeaderSection />
         
         {/* Category Section */}
         <CategorySection />
@@ -175,8 +175,7 @@ const PropertyForm = () => {
         {/* Bathroom Section */}
         <BathroomSection formData={formData} handleRadioChange={handleRadioChange} />
         
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h2 className="font-bold mb-4 text-left">ADDITIONAL DETAILS</h2>
+        <div className="px-6 py-4 flex flex-col border-b border-gray-200">
           {/* Add additional sections */}
           <div className="mb-4">
             <label className="block text-sm font-medium mb-2 text-left">Furnishing</label>
@@ -229,9 +228,9 @@ const PropertyForm = () => {
           </div>
 
           {/* Super Builtup area */}
-          <div className="mb-4">
+          <div className="gap-4 md:mb-8">
             <label className="block text-sm font-medium mb-2 text-left">
-              <span className="text-red-500 font-medium">Super Builtup area sqft *</span>
+              <span className=" font-medium">Super Builtup area sqft *</span>
             </label>
             <input
               type="text"
@@ -239,7 +238,7 @@ const PropertyForm = () => {
               value={formData.superBuiltupArea}
               onChange={handleInputChange}
               onBlur={handleBlur}
-              className={`w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${touched.superBuiltupArea && !formData.superBuiltupArea ? 'border-red-500 bg-red-50' : 'border-gray-300'}`}
+              className={`"w-full md:w-[60%] p-2 py-3  border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${touched.superBuiltupArea && !formData.superBuiltupArea ? 'border-red-500 bg-red-50' : 'border-gray-300'}`}
               placeholder="Enter super builtup area"
               required
             />
@@ -249,7 +248,7 @@ const PropertyForm = () => {
           </div>
 
           {/* Carpet Area */}
-          <div className="mb-4">
+          <div className="gap-4 md:mb-8 ">
             <label className="block text-sm font-medium mb-2 text-left">
               Carpet Area sqft <span className="text-red-500">*</span>
             </label>
@@ -260,7 +259,7 @@ const PropertyForm = () => {
               value={formData.carpetArea}
               onChange={handleInputChange}
               onBlur={handleBlur}
-              className={`mt-1 block w-full rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 ${touched.carpetArea && !formData.carpetArea ? 'border-red-300 bg-red-50' : 'border-gray-300'}`}
+              className={`mt-1 "w-full md:w-[60%] p-2 py-3 border-[1px] border-gray-400  block w-full rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 ${touched.carpetArea && !formData.carpetArea ? 'border-red-300 bg-red-50' : 'border-gray-300'}`}
               placeholder="Enter carpet area in sq ft"
               min="0"
               required
@@ -269,7 +268,7 @@ const PropertyForm = () => {
               <p className="mt-1 text-sm text-red-600">Please enter carpet area in square feet</p>
             )}
           </div>
-          <div className="mb-4">
+          <div className="gap-4 md:mb-8">
             <label className="block text-sm font-medium mb-2 text-left">
               Maintenance (Monthly)
             </label>
@@ -278,11 +277,11 @@ const PropertyForm = () => {
               name="maintenance"
               value={formData.maintenance}
               onChange={handleInputChange}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full md:w-[60%] p-2 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter maintenance amount"
             />
           </div>
-          <div className="mb-4">
+          <div className="gap-4 md:mb-8">
             <label className="block text-sm font-medium mb-2 text-left">
               Total Floors
             </label>
@@ -291,11 +290,11 @@ const PropertyForm = () => {
               name="totalFloors"
               value={formData.totalFloors}
               onChange={handleInputChange}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full md:w-[60%] p-2 py-3  border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter total floors"
             />
           </div>
-          <div className="mb-4">
+          <div className="gap-4 md:mb-8">
             <label className="block text-sm font-medium mb-2 text-left">
               Floor No
             </label>
@@ -304,18 +303,18 @@ const PropertyForm = () => {
               name="floorNo"
               value={formData.floorNo}
               onChange={handleInputChange}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full md:w-[60%] p-2 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter floor number"
             />
           </div>
-          <div className="mb-4">
+          <div className="mb-4 md:mb-8">
             <label className="block text-sm font-medium mb-2 text-left">Car Parking</label>
             <div className="flex flex-wrap gap-2">
               {[0, 1, 2, 3, '3+'].map((value) => (
                 <button 
                   key={value}
                   type="button"
-                  className={`py-2 px-4 border rounded-md text-sm transition-all duration-200 ${formData.carParking === value.toString() ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-blue-300 hover:bg-blue-50/50'}`}
+                  className={`py-2 px-7 border rounded-md text-sm transition-all duration-200 ${formData.carParking === value.toString() ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-blue-300 hover:bg-blue-50/50'}`}
                   onClick={() => handleRadioChange('carParking', value.toString())}
                 >
                   {value}
@@ -331,7 +330,7 @@ const PropertyForm = () => {
               name="facing"
               value={formData.facing}
               onChange={handleInputChange}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full md:w-[60%] p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="">Select facing</option>
               <option value="north">North</option>
@@ -354,7 +353,7 @@ const PropertyForm = () => {
               name="projectName"
               value={formData.projectName}
               onChange={handleInputChange}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full md:w-[60%] p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter project name"
             />
             <div className="text-xs text-right text-gray-500 mt-1">0 / 70</div>
@@ -366,7 +365,7 @@ const PropertyForm = () => {
           <h2 className="font-bold mb-4 text-left">TITLE & DESCRIPTION</h2>
           <div className="mb-4">
             <label className="block text-sm font-medium mb-2 text-left">
-              <span className="text-red-500 font-medium">Ad title *</span>
+              <span className="font-medium">Ad title *</span>
             </label>
             <input
               type="text"
@@ -374,7 +373,7 @@ const PropertyForm = () => {
               value={formData.adTitle}
               onChange={handleInputChange}
               onBlur={handleBlur}
-              className={`w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${touched.adTitle && !formData.adTitle ? 'border-red-500 bg-red-50' : 'border-gray-300'}`}
+              className={`w-full md:w-[60%] p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${touched.adTitle && !formData.adTitle ? 'border-red-500 bg-red-50' : 'border-gray-300'}`}
               placeholder="Enter ad title"
               required
             />
@@ -428,7 +427,7 @@ const PropertyForm = () => {
         {/* Post Now Button */}
         <SubmitButtonSection />
       </form>
-    </div>
+    </div></>
   );
 };
 

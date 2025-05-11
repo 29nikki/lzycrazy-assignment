@@ -2,7 +2,7 @@ import React from 'react';
 
 const UserDetailsSection = ({ formData, handleInputChange }) => {
   return (
-    <div className="px-6 py-4 border-b border-gray-200">
+    <div className="px-6 py-4 border-b w-full md:w-[60%] border-gray-200">
       <h2 className="font-bold mb-4 text-left">REVIEW YOUR DETAILS</h2>
       <div className="flex items-center mb-4">
         <div className="w-12 h-12 bg-teal-700 rounded-full flex items-center justify-center mr-4">

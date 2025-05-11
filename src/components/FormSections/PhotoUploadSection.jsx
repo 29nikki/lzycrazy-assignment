@@ -4,7 +4,7 @@ const PhotoUploadSection = ({ uploadedImages, handleImageUpload, handleRemoveIma
   const totalSlots = 20;
 
   return (
-    <div className="px-6 py-4 border-b border-gray-200">
+    <div className="px-6 py-4 border-b border-gray-200 md:pr-[40%]">
       <h2 className="font-bold mb-4 text-left">UPLOAD UP TO 20 PHOTOS</h2>
       <div className="grid grid-cols-4 gap-2">
         {[...Array(totalSlots)].map((_, index) => {

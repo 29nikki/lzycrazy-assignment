@@ -1,44 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const BathroomSection = ({ formData, handleRadioChange }) => {
+  const [touched, setTouched] = useState(false);
+
+  const handleOptionClick = (value) => {
+    setTouched(true);
+    if (formData.bathrooms === value) {
+      handleRadioChange('bathrooms', '');
+    } else {
+      handleRadioChange('bathrooms', value);
+    }
+  };
+
   return (
     <div className="mb-4 px-6">
       <label className="block text-sm font-medium mb-2 text-left">
-        <span className="text-red-500 font-medium">Bathrooms *</span>
+        <span className=" font-medium">Bathrooms </span>
       </label>
-      <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
-        <button 
-          type="button"
-          className={`py-2 px-4 border rounded-md text-sm transition-all duration-200 ${formData.bathrooms === '1' ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-blue-300 hover:bg-blue-50/50'}`}
-          onClick={() => handleRadioChange('bathrooms', '1')}
-        >
-          1
-        </button>
-        <button 
-          type="button"
-          className={`py-2 px-4 border rounded-md text-sm transition-all duration-200 ${formData.bathrooms === '2' ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-blue-300 hover:bg-blue-50/50'}`}
-          onClick={() => handleRadioChange('bathrooms', '2')}
-        >
-          2
-        </button>
-        <button 
-          type="button"
-          className={`py-2 px-4 border rounded-md text-sm transition-all duration-200 ${formData.bathrooms === '3' ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-blue-300 hover:bg-blue-50/50'}`}
-          onClick={() => handleRadioChange('bathrooms', '3')}
-        >
-          3
-        </button>
-        <button 
-          type="button"
-          className={`py-2 px-4 border rounded-md text-sm transition-all duration-200 ${formData.bathrooms === '4+' ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-blue-300 hover:bg-blue-50/50'}`}
-          onClick={() => handleRadioChange('bathrooms', '4+')}
-        >
-          4+
-        </button>
+      <div className="flex gap-2">
+        {['1', '2', '3','4', '4+'].map((value) => (
+          <button 
+            key={value}
+            type="button"
+            className={`py-2 px-7 border rounded-md text-sm transition-all duration-200 ${
+              formData.bathrooms === value
+                ? 'border-black bg-gray-100'
+                : 'border-gray-300 hover:border-black hover:bg-gray-50'
+            }`}
+            onClick={() => handleOptionClick(value)}
+          >
+            {value}
+          </button>
+        ))}
       </div>
-      {!formData.bathrooms && (
-        <p className="text-red-500 text-xs mt-1">Bathrooms count is mandatory. Please select an option.</p>
-      )}
+     
     </div>
   );
 };

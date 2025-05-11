@@ -2,7 +2,7 @@ import React from 'react';
 
 const LocationSection = ({ formData, setFormData, handleInputChange, handleRadioChange }) => {
   return (
-    <div className="px-6 py-4 border-b border-gray-200">
+    <div className="px-6 py-4 border-b w-full md:w-[60%] border-gray-200">
       <h2 className="font-bold mb-4 text-left">CONFIRM YOUR LOCATION</h2>
       <div className="flex mb-4">
         <button 
@@ -22,7 +22,7 @@ const LocationSection = ({ formData, setFormData, handleInputChange, handleRadio
       </div>
       <div className="mb-4">
         <label className="block text-sm font-medium mb-2 text-left">
-          <span className="text-red-500 font-medium">State *</span>
+          <span className="font-medium">State *</span>
         </label>
         <select
           name="state"
@@ -33,11 +33,22 @@ const LocationSection = ({ formData, setFormData, handleInputChange, handleRadio
           required
         >
           <option value="">Select state</option>
-          <option value="delhi">Delhi</option>
-          <option value="maharashtra">Maharashtra</option>
-          <option value="karnataka">Karnataka</option>
-          <option value="tamilnadu">Tamil Nadu</option>
-          <option value="telangana">Telangana</option>
+<option value="andhra-pradesh">Andhra Pradesh</option>
+<option value="arunachal-pradesh">Arunachal Pradesh</option>
+<option value="assam">Assam</option>
+<option value="bihar">Bihar</option>
+<option value="chhattisgarh">Chhattisgarh</option>
+<option value="goa">Goa</option>
+<option value="gujarat">Gujarat</option>
+<option value="haryana">Haryana</option>
+<option value="himachal-pradesh">Himachal Pradesh</option>
+<option value="jharkhand">Jharkhand</option>
+<option value="karnataka">Karnataka</option>
+<option value="kerala">Kerala</option>
+<option value="madhya-pradesh">Madhya Pradesh</option>
+<option value="maharashtra">Maharashtra</option>
+
+
         </select>
         {formData.stateTouched && !formData.state && (
           <p className="text-red-500 text-xs mt-1">This field is mandatory</p>
